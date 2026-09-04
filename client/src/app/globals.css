@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper text-ink-800 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-melon-200 text-ink-900;
+  }
+
+  h1, h2, h3 {
+    @apply font-display text-ink-900;
+  }
+}
+
+@layer components {
+  /* --- React Flow theming (Step 2) ------------------------------------- */
+
+  /* Connection handles stay hidden until you hover or select a node, so the
+     board reads as clean cards rather than a circuit diagram. */
+  .react-flow__handle.canvas-handle {
+    width: 9px;
+    height: 9px;
+    border-radius: 9999px;
+    background: #ffffff;
+    border: 1.5px solid #b0b0aa;
+    opacity: 0;
+    /* No transform here - React Flow uses it to position the handle. */
+    transition: opacity 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .react-flow__node:hover .react-flow__handle.canvas-handle,
+  .react-flow__node.selected .react-flow__handle.canvas-handle {
+    opacity: 1;
+  }
+
+  .react-flow__handle.canvas-handle:hover {
+    border-color: #e2445c;
+    box-shadow: 0 0 0 3px rgba(226, 68, 92, 0.18);
+  }
+
+  /* The line you drag while making a connection. */
+  .react-flow__connectionline .react-flow__edge-path {
+    stroke: #e2445c;
+    stroke-width: 2;
+    stroke-dasharray: 5 4;
+  }
+
+  /* --- Resize frame (NodeResizer) --------------------------------------
+     Only visible while a node is selected. The handle sits exactly on the
+     corner; the node checkbox is 18px inset 8px from the bottom-right, so
+     the two clear each other by 4px and never fight for the same click. */
+  .canvas-resize-line {
+    border-color: #e2445c;
+    border-width: 1px;
+  }
+  .canvas-resize-handle {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    border: 1.5px solid #e2445c;
+    background: #ffffff;
+  }
+  .canvas-resize-handle:hover {
+    background: #e2445c;
+  }
+
+  /* Node wrapper: our own card supplies the border and shadow. */
+  .react-flow__node {
+    cursor: grab;
+  }
+  .react-flow__node.dragging {
+    cursor: grabbing;
+  }
+
+  /* Shift-drag marquee. */
+  .react-flow__selection {
+    background: rgba(226, 68, 92, 0.07);
+    border: 1px solid rgba(226, 68, 92, 0.4);
+  }
+
+  /* Keep the required xyflow attribution present but understated. */
+  .react-flow__attribution {
+    background: transparent;
+    font-size: 10px;
+  }
+  .react-flow__attribution a {
+    color: #b0b0aa;
+  }
+}
+
+@layer utilities {
+  /* Subtle dot grid used by the canvas surface (PRD 12: neutral off-white canvas). */
+  .bg-dot-grid {
+    background-color: #f4f3f1;
+    background-image: radial-gradient(#d3d3cf 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-position: -11px -11px;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Thin, unobtrusive scrollbars for panels. */
+  .scroll-slim {
+    scrollbar-width: thin;
+    scrollbar-color: #d3d3cf transparent;
+  }
+  .scroll-slim::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .scroll-slim::-webkit-scrollbar-thumb {
+    background-color: #d3d3cf;
+    border-radius: 9999px;
+  }
+  .scroll-slim::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
